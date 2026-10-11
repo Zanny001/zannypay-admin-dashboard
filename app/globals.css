@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+<<<<<<< HEAD
+  @apply bg-slate-50 text-slate-900;
+=======
+  @apply bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+/* Subtle cool tint on the light canvas so white cards lift off it, and a
+   deep navy-black (not pure black) canvas in dark mode — the same trick
+   the premium dashboard kits use to keep surfaces luminous. */
+@layer base {
+  body {
+    background-image: radial-gradient(1200px 600px at 80% -10%, rgba(10, 27, 77, 0.04), transparent 60%);
+    background-attachment: fixed;
+  }
+  .dark body {
+    background-image: radial-gradient(1200px 600px at 80% -10%, rgba(212, 164, 69, 0.05), transparent 60%);
+  }
+>>>>>>> cc343e15 (Upgrade to v8 commit)
+}
+
+/* Amounts and reference codes render in monospace throughout the app —
+   a small, deliberate "this is financial data" cue, and it makes columns
+   of numbers actually line up. */
+.tabular {
+  @apply font-mono tabular-nums;
+}
+<<<<<<< HEAD
+=======
+
+/* Slim, unobtrusive scrollbars — a dense ops tool scrolls constantly. */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-slate-300 dark:bg-slate-700;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::selection {
+  @apply bg-brand-gold/30 text-inherit;
+}
+>>>>>>> cc343e15 (Upgrade to v8 commit)

@@ -38,6 +38,19 @@ Open http://localhost:3001 (or whatever port `next dev` chooses) and log
 in with an admin account created via the backend's
 `POST /admin-auth/bootstrap` or `POST /admin/admins`.
 
+## Netlify builds
+
+The `build` script explicitly sets `NODE_ENV=production` before running
+Next.js. This prevents an inherited development setting from mixing
+development and production React/Next.js runtimes during prerendering,
+which can cause both `<Html>` and `useContext` errors even without invalid
+document imports or duplicate React dependencies. The setting applies
+only to the build command; local development and tests are unchanged.
+
+Use the package's `build` script for deployment rather than calling
+`next build` directly. Do not set `NODE_ENV` in `.env` or `.env.local`;
+Next.js normally selects the appropriate mode for each command.
+
 ## Pages
 
 - `/dashboard` — headline platform stats

@@ -38,27 +38,16 @@ export default function FraudPage() {
 
   return (
     <div className="space-y-4">
-<<<<<<< HEAD
-      <div className="flex gap-1 rounded-lg bg-slate-100 p-1 w-fit">
-        <button
-          onClick={() => setTab('alerts')}
-          className={`rounded-md px-4 py-1.5 text-sm font-medium ${tab === 'alerts' ? 'bg-white shadow-sm text-slate-900' : 'text-slate-500'}`}
-=======
       <div className="flex gap-1 rounded-lg bg-slate-100 p-1 w-fit dark:bg-slate-800/60">
         <button
           onClick={() => setTab('alerts')}
           className={`rounded-md px-4 py-1.5 text-sm font-medium ${tab === 'alerts' ? 'bg-white shadow-sm text-slate-900 dark:bg-slate-900 dark:text-slate-50' : 'text-slate-500 dark:text-slate-400'}`}
->>>>>>> cc343e15 (Upgrade to v8 commit)
         >
           Alerts
         </button>
         <button
           onClick={() => setTab('rules')}
-<<<<<<< HEAD
-          className={`rounded-md px-4 py-1.5 text-sm font-medium ${tab === 'rules' ? 'bg-white shadow-sm text-slate-900' : 'text-slate-500'}`}
-=======
           className={`rounded-md px-4 py-1.5 text-sm font-medium ${tab === 'rules' ? 'bg-white shadow-sm text-slate-900 dark:bg-slate-900 dark:text-slate-50' : 'text-slate-500 dark:text-slate-400'}`}
->>>>>>> cc343e15 (Upgrade to v8 commit)
         >
           Rules{canManageRules ? '' : ' (view only)'}
         </button>
@@ -124,20 +113,12 @@ function AlertsTab() {
           <option value="dismissed">Dismissed</option>
           <option value="">All</option>
         </Select>
-<<<<<<< HEAD
-        <p className="text-xs text-slate-400">{total} alerts</p>
-=======
         <p className="text-xs text-slate-400 dark:text-slate-500">{total} alerts</p>
->>>>>>> cc343e15 (Upgrade to v8 commit)
       </div>
 
       {alerts.length > 0 && (
         <Card className="p-4">
-<<<<<<< HEAD
-          <p className="mb-2 text-xs font-medium uppercase tracking-wide text-slate-400">Severity breakdown (this view)</p>
-=======
           <p className="mb-2 text-xs font-medium uppercase tracking-wide text-slate-400 dark:text-slate-500">Severity breakdown (this view)</p>
->>>>>>> cc343e15 (Upgrade to v8 commit)
           <ResponsiveContainer width="100%" height={100}>
             <BarChart data={severityCounts} layout="vertical" margin={{ left: 10 }}>
               <XAxis type="number" hide allowDecimals={false} />
@@ -163,40 +144,23 @@ function AlertsTab() {
               <div className="flex items-start justify-between">
                 <div>
                   <div className="flex items-center gap-2">
-<<<<<<< HEAD
-                    <p className="font-semibold text-slate-900">{a.ruleName.replace(/_/g, ' ')}</p>
-                    <SeverityBadge severity={a.severity} />
-                    <StatusBadge status={a.status} />
-                    {a.autoFrozeAccount && <span className="text-xs text-red-600">Account auto-frozen</span>}
-                  </div>
-                  <p className="mt-1 text-sm text-slate-500">
-=======
                     <p className="font-semibold text-slate-900 dark:text-slate-50">{a.ruleName.replace(/_/g, ' ')}</p>
                     <SeverityBadge severity={a.severity} />
                     <StatusBadge status={a.status} />
                     {a.autoFrozeAccount && <span className="text-xs text-red-600 dark:text-red-400">Account auto-frozen</span>}
                   </div>
                   <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
->>>>>>> cc343e15 (Upgrade to v8 commit)
                     {a.user?.name} · {a.user?.accountNumber} · {new Date(a.createdAt).toLocaleString()}
                   </p>
                 </div>
               </div>
               {a.details && (
-<<<<<<< HEAD
-                <pre className="tabular mt-3 overflow-x-auto rounded-lg bg-slate-50 p-3 text-xs text-slate-600">
-=======
                 <pre className="tabular mt-3 overflow-x-auto rounded-lg bg-slate-50 p-3 text-xs text-slate-600 dark:bg-slate-800/50 dark:text-slate-300">
->>>>>>> cc343e15 (Upgrade to v8 commit)
                   {JSON.stringify(a.details, null, 2)}
                 </pre>
               )}
               {a.status === 'open' && (
-<<<<<<< HEAD
-                <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-slate-100 pt-3">
-=======
                 <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-slate-100 pt-3 dark:border-slate-800">
->>>>>>> cc343e15 (Upgrade to v8 commit)
                   <Input
                     placeholder="Review note (optional)"
                     value={notes[a.id] || ''}
@@ -299,21 +263,12 @@ function RulesTab({ canManage }: { canManage: boolean }) {
           <div className="flex items-start justify-between gap-4">
             <div>
               <div className="flex items-center gap-2">
-<<<<<<< HEAD
-                <p className="font-semibold text-slate-900">{r.name.replace(/_/g, ' ')}</p>
-                <SeverityBadge severity={r.severity} />
-                {!r.isEnabled && <span className="text-xs text-slate-400">Disabled</span>}
-                {r.autoFreeze && <span className="text-xs text-red-600">Auto-freezes account</span>}
-              </div>
-              {r.description && <p className="mt-1 text-sm text-slate-500">{r.description}</p>}
-=======
                 <p className="font-semibold text-slate-900 dark:text-slate-50">{r.name.replace(/_/g, ' ')}</p>
                 <SeverityBadge severity={r.severity} />
                 {!r.isEnabled && <span className="text-xs text-slate-400 dark:text-slate-500">Disabled</span>}
                 {r.autoFreeze && <span className="text-xs text-red-600 dark:text-red-400">Auto-freezes account</span>}
               </div>
               {r.description && <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{r.description}</p>}
->>>>>>> cc343e15 (Upgrade to v8 commit)
             </div>
             {canManage && (
               <div className="flex shrink-0 gap-2">
@@ -327,21 +282,12 @@ function RulesTab({ canManage }: { canManage: boolean }) {
             )}
           </div>
 
-<<<<<<< HEAD
-          <div className="mt-3 border-t border-slate-100 pt-3">
-            <p className="mb-1 text-xs font-medium text-slate-400">Config (JSON)</p>
-            {canManage ? (
-              <>
-                <textarea
-                  className="tabular w-full rounded-lg border border-slate-300 p-2 text-xs focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
-=======
           <div className="mt-3 border-t border-slate-100 pt-3 dark:border-slate-800">
             <p className="mb-1 text-xs font-medium text-slate-400 dark:text-slate-500">Config (JSON)</p>
             {canManage ? (
               <>
                 <textarea
                   className="tabular w-full rounded-lg border border-slate-300 bg-white p-2 text-xs text-slate-900 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:border-brand-gold dark:focus:ring-brand-gold"
->>>>>>> cc343e15 (Upgrade to v8 commit)
                   rows={4}
                   value={editing[r.id] ?? JSON.stringify(r.config, null, 2)}
                   onChange={(e) => setEditing((prev) => ({ ...prev, [r.id]: e.target.value }))}
@@ -351,11 +297,7 @@ function RulesTab({ canManage }: { canManage: boolean }) {
                 </Button>
               </>
             ) : (
-<<<<<<< HEAD
-              <pre className="tabular overflow-x-auto rounded-lg bg-slate-50 p-3 text-xs text-slate-600">
-=======
               <pre className="tabular overflow-x-auto rounded-lg bg-slate-50 p-3 text-xs text-slate-600 dark:bg-slate-800/50 dark:text-slate-300">
->>>>>>> cc343e15 (Upgrade to v8 commit)
                 {JSON.stringify(r.config, null, 2)}
               </pre>
             )}

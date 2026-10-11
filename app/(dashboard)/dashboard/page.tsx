@@ -1,13 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-<<<<<<< HEAD
-import { apiFetch, ClientApiError } from '@/lib/client-api';
-import { StatTile, ErrorBanner, Card, CardHeader } from '@/components/ui';
-
-export default function DashboardPage() {
-  const [stats, setStats] = useState<any>(null);
-=======
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { apiFetch, ClientApiError } from '@/lib/client-api';
 import { StatTile, ErrorBanner, Card, CardHeader } from '@/components/ui';
@@ -38,25 +31,10 @@ export default function DashboardPage() {
   const [stats, setStats] = useState<any>(null);
   const [trend, setTrend] = useState<{ date: string; count: number; volume: number }[]>([]);
   const [categories, setCategories] = useState<{ category: string; count: number; volume: number }[]>([]);
->>>>>>> cc343e15 (Upgrade to v8 commit)
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     apiFetch('/admin/dashboard')
-<<<<<<< HEAD
-      .then((res) => {
-        // If your backend wraps responses in { data: ... }, extract it. Otherwise use res directly.
-        const data = res.data ? res.data : res;
-        setStats(data);
-      })
-      .catch((err: ClientApiError) => setError(err.message));
-  }, []);
-
-  if (error) return <ErrorBanner message={error} />;
-  if (!stats) return <p className="text-sm text-slate-400">Loading…</p>;
-
-  // Safe extractors with fallbacks to 0 to prevent toLocaleString crashes
-=======
       .then((res) => setStats(res.data ? res.data : res))
       .catch((err: ClientApiError) => setError(err.message));
     apiFetch('/admin/analytics/trend?days=30')
@@ -78,7 +56,6 @@ export default function DashboardPage() {
     );
   }
 
->>>>>>> cc343e15 (Upgrade to v8 commit)
   const totalUsers = stats.totalUsers || 0;
   const frozenUsers = stats.frozenUsers || 0;
   const pendingKyc = stats.pendingKycReviews || 0;
@@ -86,56 +63,16 @@ export default function DashboardPage() {
   const activeLoans = stats.activeLoans || 0;
   const openDisputes = stats.openDisputes || 0;
   const flaggedTx = stats.flaggedTransactions || 0;
-<<<<<<< HEAD
-  
-  const txCount = stats.last30Days?.transactionCount || 0;
-  const txVolume = stats.last30Days?.transactionVolume || 0;
-
-  function formatNaira(value: number) {
-    return `₦${Number(value).toLocaleString('en-NG', { maximumFractionDigits: 2 })}`;
-  }
-=======
 
   const txCount = stats.last30Days?.transactionCount || 0;
   const txVolume = stats.last30Days?.transactionVolume || 0;
 
   const axisColor = theme === 'dark' ? '#64748B' : '#94A3B8';
   const gridColor = theme === 'dark' ? '#1E293B' : '#E2E8F0';
->>>>>>> cc343e15 (Upgrade to v8 commit)
 
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-<<<<<<< HEAD
-        <StatTile label="Total users" value={totalUsers.toLocaleString()} />
-        <StatTile 
-          label="Frozen accounts" 
-          value={frozenUsers.toLocaleString()} 
-          hint={frozenUsers > 0 ? 'Review in Users' : undefined} 
-        />
-        <StatTile 
-          label="Pending KYC reviews" 
-          value={pendingKyc.toLocaleString()} 
-          hint={pendingKyc > 0 ? 'Awaiting decision' : 'All caught up'} 
-        />
-        <StatTile 
-          label="Total wallet float" 
-          value={formatNaira(walletFloat)} 
-          hint="Sum of all customer balances" 
-        />
-        <StatTile label="Active loans" value={activeLoans.toLocaleString()} />
-        <StatTile label="Open disputes" value={openDisputes.toLocaleString()} />
-        <StatTile 
-          label="Flagged transactions" 
-          value={flaggedTx.toLocaleString()} 
-          hint="See Fraud & Risk" 
-        />
-        <StatTile 
-          label="30-day volume" 
-          value={formatNaira(txVolume)} 
-          hint={`${txCount.toLocaleString()} completed transactions`} 
-        />
-=======
         {[
           { label: 'Total users', value: totalUsers.toLocaleString() },
           { label: 'Frozen accounts', value: frozenUsers.toLocaleString(), hint: frozenUsers > 0 ? 'Review in Users' : undefined, tone: frozenUsers > 0 ? 'warning' : 'neutral' },
@@ -221,24 +158,10 @@ export default function DashboardPage() {
             )}
           </div>
         </Card>
->>>>>>> cc343e15 (Upgrade to v8 commit)
       </div>
 
       <Card>
         <CardHeader title="Where to look first" />
-<<<<<<< HEAD
-        <div className="grid grid-cols-1 gap-4 p-5 sm:grid-cols-3 text-sm text-slate-600">
-          <p>
-            <span className="font-medium text-slate-800">{pendingKyc}</span> KYC submission
-            {pendingKyc === 1 ? '' : 's'} waiting in the queue.
-          </p>
-          <p>
-            <span className="font-medium text-slate-800">{flaggedTx}</span> transaction
-            {flaggedTx === 1 ? '' : 's'} currently flagged for review.
-          </p>
-          <p>
-            <span className="font-medium text-slate-800">{openDisputes}</span> dispute
-=======
         <div className="grid grid-cols-1 gap-4 p-5 text-sm text-slate-600 dark:text-slate-300 sm:grid-cols-3">
           <p>
             <span className="font-medium text-slate-800 dark:text-slate-100">{pendingKyc}</span> KYC submission
@@ -250,7 +173,6 @@ export default function DashboardPage() {
           </p>
           <p>
             <span className="font-medium text-slate-800 dark:text-slate-100">{openDisputes}</span> dispute
->>>>>>> cc343e15 (Upgrade to v8 commit)
             {openDisputes === 1 ? '' : 's'} open or under review.
           </p>
         </div>

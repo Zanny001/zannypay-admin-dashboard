@@ -1,0 +1,4 @@
+[build]
+  # Run a pinned Yarn via npx so the build works even when no global `yarn` binary is installed.
+  command = "npx --yes yarn@1.22.19 install --frozen-lockfile && npx --yes yarn@1.22.19 run build"
+  publish = ".next"

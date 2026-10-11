@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-<<<<<<< HEAD
-import { backendFetch, BackendError } from '@/lib/api';
-=======
 import { backendFetch, rawBackendFetch, BackendError } from '@/lib/api';
 import { isSameOriginRequest, forbiddenOriginResponse } from '@/lib/rate-limit';
->>>>>>> cc343e15 (Upgrade to v8 commit)
 
 // Every admin page's data calls go through here: browser -> this route
 // (same-origin, cookie sent automatically) -> Nest backend (Authorization
@@ -15,8 +11,6 @@ async function handle(req: NextRequest, params: { path: string[] }) {
   const search = req.nextUrl.search; // includes the leading "?" or is ""
   const method = req.method;
 
-<<<<<<< HEAD
-=======
   // CSRF backstop on top of SameSite=Lax: state-changing requests must
   // provably originate from this app's own pages (Origin/Referer host
   // match). GET/HEAD stay exempt — they're read-only and include health
@@ -25,15 +19,12 @@ async function handle(req: NextRequest, params: { path: string[] }) {
     return forbiddenOriginResponse();
   }
 
->>>>>>> cc343e15 (Upgrade to v8 commit)
   let body: string | undefined;
   if (method !== 'GET' && method !== 'DELETE') {
     const text = await req.text();
     body = text.length > 0 ? text : undefined;
   }
 
-<<<<<<< HEAD
-=======
   // File downloads — CSV exports (AdminController's /transactions/export,
   // /audit-logs/export) and the KYC decision PDF
   // (ComplianceExportController's /kyc-record.pdf) — return a raw
@@ -67,7 +58,6 @@ async function handle(req: NextRequest, params: { path: string[] }) {
     }
   }
 
->>>>>>> cc343e15 (Upgrade to v8 commit)
   try {
     const result = await backendFetch(`${path}${search}`, { method, body });
     return NextResponse.json(result ?? { success: true });

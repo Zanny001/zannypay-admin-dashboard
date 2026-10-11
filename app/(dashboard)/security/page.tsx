@@ -85,28 +85,17 @@ function TwoFactorSection() {
 
         {recoveryCodes ? (
           <div className="space-y-3">
-<<<<<<< HEAD
-            <p className="text-sm font-medium text-emerald-700">
-              Two-factor authentication is now enabled. Save these recovery codes somewhere safe — each one works once, and they are shown only this one time.
-            </p>
-            <div className="tabular grid grid-cols-2 gap-2 rounded-lg bg-slate-50 p-4 text-sm sm:grid-cols-3">
-=======
             <p className="text-sm font-medium text-emerald-700 dark:text-emerald-400">
               Two-factor authentication is now enabled. Save these recovery codes somewhere safe — each one works once, and they are shown only this one time.
             </p>
             <div className="tabular grid grid-cols-2 gap-2 rounded-lg bg-slate-50 p-4 text-sm sm:grid-cols-3 dark:bg-slate-800/50">
->>>>>>> cc343e15 (Upgrade to v8 commit)
               {recoveryCodes.map((c) => <span key={c}>{c}</span>)}
             </div>
             <Button variant="secondary" onClick={() => setRecoveryCodes(null)}>Done</Button>
           </div>
         ) : step === 'idle' ? (
           <div className="flex items-center justify-between">
-<<<<<<< HEAD
-            <p className="text-sm text-slate-600">
-=======
             <p className="text-sm text-slate-600 dark:text-slate-300">
->>>>>>> cc343e15 (Upgrade to v8 commit)
               Protect your account with an authenticator app (Google Authenticator, Authy, 1Password, etc.).
             </p>
             <div className="flex gap-2">
@@ -116,21 +105,12 @@ function TwoFactorSection() {
           </div>
         ) : (
           <div className="space-y-3">
-<<<<<<< HEAD
-            <p className="text-sm text-slate-600">Scan this QR code in your authenticator app, then enter the 6-digit code it shows.</p>
-            {qrCodeDataUrl && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={qrCodeDataUrl} alt="2FA QR code" className="h-40 w-40 rounded-lg border border-slate-200" />
-            )}
-            {secret && <p className="tabular text-xs text-slate-400">Manual entry key: {secret}</p>}
-=======
             <p className="text-sm text-slate-600 dark:text-slate-300">Scan this QR code in your authenticator app, then enter the 6-digit code it shows.</p>
             {qrCodeDataUrl && (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={qrCodeDataUrl} alt="2FA QR code" className="h-40 w-40 rounded-lg border border-slate-200 bg-white p-1 dark:border-slate-700" />
             )}
             {secret && <p className="tabular text-xs text-slate-400 dark:text-slate-500">Manual entry key: {secret}</p>}
->>>>>>> cc343e15 (Upgrade to v8 commit)
             <div className="flex max-w-xs gap-2">
               <Input placeholder="123456" value={code} onChange={(e) => setCode(e.target.value)} />
               <Button onClick={confirmEnable} disabled={busy}>Confirm</Button>
@@ -139,11 +119,7 @@ function TwoFactorSection() {
         )}
 
         {showDisable && step === 'idle' && !recoveryCodes && (
-<<<<<<< HEAD
-          <div className="max-w-sm space-y-2 border-t border-slate-100 pt-4">
-=======
           <div className="max-w-sm space-y-2 border-t border-slate-100 pt-4 dark:border-slate-800">
->>>>>>> cc343e15 (Upgrade to v8 commit)
             <Input type="password" placeholder="Current password" value={password} onChange={(e) => setPassword(e.target.value)} />
             <Input placeholder="Authenticator code or recovery code" value={disableCode} onChange={(e) => setDisableCode(e.target.value)} />
             <Button variant="danger" onClick={disable} disabled={busy}>Confirm disable</Button>
@@ -198,21 +174,12 @@ function SessionsSection() {
         {sessions.length === 0 ? (
           <EmptyState message="No other active sessions." />
         ) : (
-<<<<<<< HEAD
-          <div className="divide-y divide-slate-50">
-            {sessions.map((s) => (
-              <div key={s.id} className="flex items-center justify-between py-3 text-sm">
-                <div>
-                  <p className="text-slate-700">{s.ipAddress || 'Unknown IP'}</p>
-                  <p className="text-xs text-slate-400">{s.userAgent || 'Unknown device'} · since {new Date(s.createdAt).toLocaleString()}</p>
-=======
           <div className="divide-y divide-slate-50 dark:divide-slate-800">
             {sessions.map((s) => (
               <div key={s.id} className="flex items-center justify-between py-3 text-sm">
                 <div>
                   <p className="text-slate-700 dark:text-slate-200">{s.ipAddress || 'Unknown IP'}</p>
                   <p className="text-xs text-slate-400 dark:text-slate-500">{s.userAgent || 'Unknown device'} · since {new Date(s.createdAt).toLocaleString()}</p>
->>>>>>> cc343e15 (Upgrade to v8 commit)
                 </div>
                 <Button variant="secondary" disabled={busyId === s.id} onClick={() => revoke(s.id)} className="text-xs">
                   Revoke
@@ -287,11 +254,7 @@ function IpAllowlistSection() {
       />
       <div className="p-5 space-y-4">
         {!enforced && (
-<<<<<<< HEAD
-          <p className="text-xs text-slate-400">
-=======
           <p className="text-xs text-slate-400 dark:text-slate-500">
->>>>>>> cc343e15 (Upgrade to v8 commit)
             Set ADMIN_IP_ALLOWLIST_ENFORCE=true on the backend to start enforcing this list. Keep at least one trusted
             range here before doing so — enforcing with an empty list blocks everyone, including you.
           </p>
@@ -300,11 +263,7 @@ function IpAllowlistSection() {
 
         {envEntries.length > 0 && (
           <div>
-<<<<<<< HEAD
-            <p className="mb-1 text-xs font-medium text-slate-400">From ADMIN_IP_ALLOWLIST (env — edit via redeploy)</p>
-=======
             <p className="mb-1 text-xs font-medium text-slate-400 dark:text-slate-500">From ADMIN_IP_ALLOWLIST (env — edit via redeploy)</p>
->>>>>>> cc343e15 (Upgrade to v8 commit)
             <div className="flex flex-wrap gap-2">
               {envEntries.map((e) => <Badge key={e} tone="slate">{e}</Badge>)}
             </div>
@@ -312,17 +271,6 @@ function IpAllowlistSection() {
         )}
 
         <div>
-<<<<<<< HEAD
-          <p className="mb-1 text-xs font-medium text-slate-400">Managed entries</p>
-          {dbEntries.length === 0 ? (
-            <EmptyState message="No managed entries yet." />
-          ) : (
-            <div className="divide-y divide-slate-50">
-              {dbEntries.map((e) => (
-                <div key={e.id} className="flex items-center justify-between py-2 text-sm">
-                  <span className="tabular">{e.cidr} {e.label && <span className="text-slate-400">— {e.label}</span>}</span>
-                  <Button variant="ghost" disabled={busy} onClick={() => removeEntry(e.id)} className="text-xs text-red-600">
-=======
           <p className="mb-1 text-xs font-medium text-slate-400 dark:text-slate-500">Managed entries</p>
           {dbEntries.length === 0 ? (
             <EmptyState message="No managed entries yet." />
@@ -332,7 +280,6 @@ function IpAllowlistSection() {
                 <div key={e.id} className="flex items-center justify-between py-2 text-sm">
                   <span className="tabular text-slate-700 dark:text-slate-200">{e.cidr} {e.label && <span className="text-slate-400 dark:text-slate-500">— {e.label}</span>}</span>
                   <Button variant="ghost" disabled={busy} onClick={() => removeEntry(e.id)} className="text-xs text-red-600 dark:text-red-400">
->>>>>>> cc343e15 (Upgrade to v8 commit)
                     Remove
                   </Button>
                 </div>
@@ -341,11 +288,7 @@ function IpAllowlistSection() {
           )}
         </div>
 
-<<<<<<< HEAD
-        <div className="flex gap-2 border-t border-slate-100 pt-4">
-=======
         <div className="flex gap-2 border-t border-slate-100 pt-4 dark:border-slate-800">
->>>>>>> cc343e15 (Upgrade to v8 commit)
           <Input placeholder="203.0.113.10/32" value={cidr} onChange={(e) => setCidr(e.target.value)} className="max-w-[200px]" />
           <Input placeholder="Label (optional)" value={label} onChange={(e) => setLabel(e.target.value)} className="max-w-[200px]" />
           <Button onClick={addEntry} disabled={busy}>Add</Button>

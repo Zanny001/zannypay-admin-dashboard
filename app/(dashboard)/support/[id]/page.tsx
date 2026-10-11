@@ -8,11 +8,7 @@ import { Card, Badge, Button, ErrorBanner, Input } from '@/components/ui';
 
 interface Message {
   id: string;
-<<<<<<< HEAD
-  senderType: 'CUSTOMER' | 'ADMIN';
-=======
   senderType: 'CUSTOMER' | 'ADMIN' | 'AUTO';
->>>>>>> cc343e15 (Upgrade to v8 commit)
   body: string | null;
   attachmentData?: string | null;
   createdAt: string;
@@ -114,31 +110,18 @@ export default function SupportConversationPage() {
   }
 
   if (error && !conversation) return <ErrorBanner message={error} />;
-<<<<<<< HEAD
-  if (!conversation) return <p className="text-sm text-slate-400">Loading…</p>;
-
-  return (
-    <div className="space-y-4">
-      <button onClick={() => router.back()} className="text-sm text-slate-500 hover:text-slate-800">
-=======
   if (!conversation) return <p className="text-sm text-slate-400 dark:text-slate-500">Loading…</p>;
 
   return (
     <div className="space-y-4">
       <button onClick={() => router.back()} className="text-sm text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100">
->>>>>>> cc343e15 (Upgrade to v8 commit)
         ← Back to conversations
       </button>
 
       <Card className="flex items-center justify-between p-4">
         <div>
-<<<<<<< HEAD
-          <p className="font-medium text-slate-900">{conversation.user?.name}</p>
-          <p className="text-xs text-slate-400">{conversation.user?.phone} · {conversation.user?.accountNumber}</p>
-=======
           <p className="font-medium text-slate-900 dark:text-slate-50">{conversation.user?.name}</p>
           <p className="text-xs text-slate-400 dark:text-slate-500">{conversation.user?.phone} · {conversation.user?.accountNumber}</p>
->>>>>>> cc343e15 (Upgrade to v8 commit)
         </div>
         <div className="flex items-center gap-3">
           <Badge tone={conversation.status === 'open' ? 'green' : 'slate'}>{conversation.status}</Badge>
@@ -151,33 +134,6 @@ export default function SupportConversationPage() {
       <Card className="flex h-[55vh] flex-col">
         <div className="flex-1 space-y-3 overflow-y-auto p-5">
           {conversation.messages.length === 0 ? (
-<<<<<<< HEAD
-            <p className="text-sm text-slate-400">No messages yet.</p>
-          ) : (
-            conversation.messages.map((m) => (
-              <div key={m.id} className={`flex ${m.senderType === 'ADMIN' ? 'justify-end' : 'justify-start'}`}>
-                <div
-                  className={`max-w-[70%] rounded-2xl px-4 py-2 text-sm ${
-                    m.senderType === 'ADMIN' ? 'bg-brand-navy text-white' : 'bg-slate-100 text-slate-800'
-                  } ${m.attachmentData ? 'p-1.5' : ''}`}
-                >
-                  {m.attachmentData && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={m.attachmentData}
-                      alt="Attachment"
-                      className="max-h-48 cursor-pointer rounded-xl"
-                      onClick={() => setPreviewSrc(m.attachmentData!)}
-                    />
-                  )}
-                  {!!m.body && <p className={m.attachmentData ? 'mt-2 px-2' : ''}>{m.body}</p>}
-                  <p className={`mt-1 text-[10px] ${m.attachmentData ? 'px-2' : ''} ${m.senderType === 'ADMIN' ? 'text-white/60' : 'text-slate-400'}`}>
-                    {new Date(m.createdAt).toLocaleString()}
-                  </p>
-                </div>
-              </div>
-            ))
-=======
             <p className="text-sm text-slate-400 dark:text-slate-500">No messages yet.</p>
           ) : (
             conversation.messages.map((m) =>
@@ -215,7 +171,6 @@ export default function SupportConversationPage() {
                 </div>
               ),
             )
->>>>>>> cc343e15 (Upgrade to v8 commit)
           )}
           <div ref={bottomRef} />
         </div>
@@ -223,29 +178,17 @@ export default function SupportConversationPage() {
         {error && <div className="px-5"><ErrorBanner message={error} /></div>}
 
         {pendingAttachment && (
-<<<<<<< HEAD
-          <div className="flex items-center gap-3 border-t border-slate-100 px-4 pt-3">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={pendingAttachment} alt="Pending attachment" className="h-10 w-10 rounded-lg object-cover" />
-            <span className="text-xs text-slate-500">Image ready to send</span>
-            <button type="button" onClick={() => setPendingAttachment(null)} className="ml-auto text-slate-400 hover:text-slate-700">
-=======
           <div className="flex items-center gap-3 border-t border-slate-100 px-4 pt-3 dark:border-slate-800">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={pendingAttachment} alt="Pending attachment" className="h-10 w-10 rounded-lg object-cover" />
             <span className="text-xs text-slate-500 dark:text-slate-400">Image ready to send</span>
             <button type="button" onClick={() => setPendingAttachment(null)} className="ml-auto text-slate-400 hover:text-slate-700 dark:hover:text-slate-200" aria-label="Remove attachment">
->>>>>>> cc343e15 (Upgrade to v8 commit)
               <X size={16} />
             </button>
           </div>
         )}
 
-<<<<<<< HEAD
-        <form onSubmit={handleReply} className="flex gap-2 border-t border-slate-100 p-4">
-=======
         <form onSubmit={handleReply} className="flex gap-2 border-t border-slate-100 p-4 dark:border-slate-800">
->>>>>>> cc343e15 (Upgrade to v8 commit)
           <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
           <Button
             type="button"

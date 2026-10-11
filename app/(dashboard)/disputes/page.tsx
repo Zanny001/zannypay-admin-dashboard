@@ -1,17 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-<<<<<<< HEAD
-import { apiFetch, ClientApiError } from '@/lib/client-api';
-import { Card, Select, StatusBadge, ErrorBanner, EmptyState, Input, Button, Badge } from '@/components/ui';
-import { formatAge } from '@/lib/format-age';
-=======
 import { MessageSquare } from 'lucide-react';
 import { apiFetch, ClientApiError } from '@/lib/client-api';
 import { Card, Select, StatusBadge, ErrorBanner, EmptyState, Input, Button, Badge } from '@/components/ui';
 import { formatAge } from '@/lib/format-age';
 import { InternalNotesThread } from '@/components/internal-notes';
->>>>>>> cc343e15 (Upgrade to v8 commit)
 
 interface DisputeRow {
   id: string;
@@ -31,10 +25,7 @@ export default function DisputesPage() {
   const [notes, setNotes] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
-<<<<<<< HEAD
-=======
   const [openNotesId, setOpenNotesId] = useState<string | null>(null);
->>>>>>> cc343e15 (Upgrade to v8 commit)
 
   function load(s: string) {
     apiFetch(`/admin/disputes${s ? `?status=${s}` : ''}`)
@@ -82,21 +73,13 @@ export default function DisputesPage() {
           {disputes.map((d) => {
             const age = formatAge(d.createdAt, 48);
             const stillOpen = d.status === 'open' || d.status === 'under_review';
-<<<<<<< HEAD
-=======
             const notesOpen = openNotesId === d.id;
->>>>>>> cc343e15 (Upgrade to v8 commit)
             return (
             <Card key={d.id} className="p-5">
               <div className="flex items-center justify-between">
                 <div>
-<<<<<<< HEAD
-                  <p className="font-medium text-slate-800">{d.reason}</p>
-                  <p className="text-xs text-slate-400">{d.user?.name} · {d.user?.accountNumber}</p>
-=======
                   <p className="font-medium text-slate-800 dark:text-slate-100">{d.reason}</p>
                   <p className="text-xs text-slate-400 dark:text-slate-500">{d.user?.name} · {d.user?.accountNumber}</p>
->>>>>>> cc343e15 (Upgrade to v8 commit)
                 </div>
                 <div className="flex items-center gap-2">
                   {stillOpen && age.isOverdue && <Badge tone="red">Overdue · {age.label}</Badge>}
@@ -104,13 +87,8 @@ export default function DisputesPage() {
                   <StatusBadge status={d.status} />
                 </div>
               </div>
-<<<<<<< HEAD
-              {d.details && <p className="mt-2 text-sm text-slate-600">{d.details}</p>}
-              <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-slate-100 pt-3">
-=======
               {d.details && <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">{d.details}</p>}
               <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-slate-100 pt-3 dark:border-slate-800">
->>>>>>> cc343e15 (Upgrade to v8 commit)
                 <Input
                   placeholder="Resolution note"
                   value={notes[d.id] ?? d.resolutionNote ?? ''}
@@ -122,9 +100,6 @@ export default function DisputesPage() {
                     Mark {s.replace('_', ' ')}
                   </Button>
                 ))}
-<<<<<<< HEAD
-              </div>
-=======
                 <Button variant="ghost" className="ml-auto text-xs" onClick={() => setOpenNotesId(notesOpen ? null : d.id)}>
                   <MessageSquare size={13} /> {notesOpen ? 'Hide notes' : 'Internal notes'}
                 </Button>
@@ -134,7 +109,6 @@ export default function DisputesPage() {
                   <InternalNotesThread targetType="Dispute" targetId={d.id} />
                 </div>
               )}
->>>>>>> cc343e15 (Upgrade to v8 commit)
             </Card>
             );
           })}

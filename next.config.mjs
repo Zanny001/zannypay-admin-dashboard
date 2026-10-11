@@ -1,8 +1,4 @@
 /** @type {import('next').NextConfig} */
-<<<<<<< HEAD
-const nextConfig = {
-  reactStrictMode: true,
-=======
 
 // Security headers applied to every response. This dashboard is an
 // internal money-ops surface: it renders no third-party content and
@@ -51,7 +47,6 @@ const nextConfig = {
   async headers() {
     return [{ source: '/:path*', headers: securityHeaders }];
   },
->>>>>>> cc343e15 (Upgrade to v8 commit)
 };
 
 export default nextConfig;

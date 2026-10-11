@@ -1,16 +1,6 @@
 import type { Config } from 'tailwindcss';
 
 // Design direction: this is an internal operations tool, not a marketing
-<<<<<<< HEAD
-// site — density and legibility matter more than flourish. Navy pulls from
-// the ZannyPay mobile app's own brand color so the two feel like one
-// product; the warm gold accent (used sparingly — active nav state, key
-// numbers) is the one deliberate "premium fintech" touch rather than
-// another blue-on-blue SaaS dashboard. Severity colors are deliberately
-// distinct from the brand palette so a CRITICAL fraud alert is never
-// mistaken for a neutral UI accent.
-const config: Config = {
-=======
 // site — density and legibility matter more than flourish. Navy is a
 // deliberately distinct identity from the mobile app's actual brand
 // color (confirmed purple, matching its real app icon) — not a mistaken
@@ -30,23 +20,16 @@ const config: Config = {
 // accent.
 const config: Config = {
   darkMode: 'class',
->>>>>>> cc343e15 (Upgrade to v8 commit)
   content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {
         brand: {
-<<<<<<< HEAD
-          navy: '#0D2261',
-          navyLight: '#16316E',
-          gold: '#C99B3D',
-=======
           navy: '#0A1B4D',
           navyLight: '#16307A',
           navyDeep: '#050F30',
           gold: '#D4A445',
           goldLight: '#EBC887',
->>>>>>> cc343e15 (Upgrade to v8 commit)
         },
         severity: {
           low: '#64748B',
@@ -59,8 +42,6 @@ const config: Config = {
         sans: ['var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: ['var(--font-jetbrains-mono)', 'ui-monospace', 'monospace'],
       },
-<<<<<<< HEAD
-=======
       boxShadow: {
         // Layered, low-opacity shadows — the "printed on the canvas" look
         // from premium dashboard kits, instead of one flat grey shadow.
@@ -76,7 +57,6 @@ const config: Config = {
         fadeIn: 'fadeIn 0.5s ease-out',
         fadeInUp: 'fadeInUp 0.4s ease-out both',
       },
->>>>>>> cc343e15 (Upgrade to v8 commit)
     },
   },
   plugins: [],

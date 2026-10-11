@@ -47,22 +47,6 @@ export default function SupportPage() {
         ) : conversations.length === 0 ? (
           <EmptyState message="No conversations here — the queue is clear." />
         ) : (
-<<<<<<< HEAD
-          <div className="divide-y divide-slate-50">
-            {conversations.map((c) => {
-              const latest = c.messages[0];
-              const age = formatAge(c.updatedAt, 24);
-              const awaitingReply = latest?.senderType === 'CUSTOMER' && c.status === 'open';
-              return (
-                <Link key={c.id} href={`/support/${c.id}`} className="flex items-center justify-between px-5 py-4 hover:bg-slate-50">
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2">
-                      <p className="font-medium text-slate-900">{c.user?.name || 'Unknown user'}</p>
-                      {awaitingReply && <Badge tone="amber">Awaiting reply</Badge>}
-                    </div>
-                    <p className="mt-0.5 truncate text-sm text-slate-500">
-                      {latest?.body || (latest?.attachmentData ? '📷 Image' : 'No messages yet')}
-=======
           <div className="divide-y divide-slate-50 dark:divide-slate-800">
             {conversations.map((c) => {
               const latest = c.messages[0];
@@ -88,16 +72,11 @@ export default function SupportPage() {
                     </div>
                     <p className="mt-0.5 truncate text-sm text-slate-500 dark:text-slate-400">
                       {previewMessage?.body || (previewMessage?.attachmentData ? '📷 Image' : 'No messages yet')}
->>>>>>> cc343e15 (Upgrade to v8 commit)
                     </p>
                   </div>
                   <div className="ml-4 shrink-0 text-right">
                     <Badge tone={c.status === 'open' ? 'green' : 'slate'}>{c.status}</Badge>
-<<<<<<< HEAD
-                    <p className="mt-1 text-xs text-slate-400">{age.label}</p>
-=======
                     <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">{age.label}</p>
->>>>>>> cc343e15 (Upgrade to v8 commit)
                   </div>
                 </Link>
               );

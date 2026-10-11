@@ -1,9 +1,4 @@
 import { ReactNode } from 'react';
-<<<<<<< HEAD
-
-export function Card({ children, className = '' }: { children: ReactNode; className?: string }) {
-  return <div className={`rounded-xl border border-slate-200 bg-white shadow-sm ${className}`}>{children}</div>;
-=======
 import { Loader2 } from 'lucide-react';
 
 // Master audit, Section 6: no dark mode existed anywhere. Every primitive
@@ -17,39 +12,24 @@ export function Card({ children, className = '' }: { children: ReactNode; classN
       {children}
     </div>
   );
->>>>>>> cc343e15 (Upgrade to v8 commit)
 }
 
 export function CardHeader({ title, action }: { title: string; action?: ReactNode }) {
   return (
-<<<<<<< HEAD
-    <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
-      <h2 className="text-sm font-semibold text-slate-800">{title}</h2>
-=======
     <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4 dark:border-slate-800">
       <h2 className="text-sm font-semibold tracking-tight text-slate-800 dark:text-slate-100">{title}</h2>
->>>>>>> cc343e15 (Upgrade to v8 commit)
       {action}
     </div>
   );
 }
 
 const badgeTones: Record<string, string> = {
-<<<<<<< HEAD
-  slate: 'bg-slate-100 text-slate-700',
-  green: 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200',
-  red: 'bg-red-50 text-red-700 ring-1 ring-red-200',
-  amber: 'bg-amber-50 text-amber-800 ring-1 ring-amber-200',
-  gold: 'bg-brand-gold/10 text-brand-gold ring-1 ring-brand-gold/30',
-  navy: 'bg-brand-navy/10 text-brand-navy ring-1 ring-brand-navy/20',
-=======
   slate: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
   green: 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:ring-emerald-500/30',
   red: 'bg-red-50 text-red-700 ring-1 ring-red-200 dark:bg-red-500/10 dark:text-red-400 dark:ring-red-500/30',
   amber: 'bg-amber-50 text-amber-800 ring-1 ring-amber-200 dark:bg-amber-500/10 dark:text-amber-400 dark:ring-amber-500/30',
   gold: 'bg-brand-gold/10 text-brand-gold ring-1 ring-brand-gold/30',
   navy: 'bg-brand-navy/10 text-brand-navy ring-1 ring-brand-navy/20 dark:bg-brand-gold/10 dark:text-brand-gold dark:ring-brand-gold/20',
->>>>>>> cc343e15 (Upgrade to v8 commit)
 };
 
 export function Badge({ children, tone = 'slate' }: { children: ReactNode; tone?: keyof typeof badgeTones }) {
@@ -90,10 +70,7 @@ export function Button({
   type = 'button',
   variant = 'primary',
   disabled,
-<<<<<<< HEAD
-=======
   loading = false,
->>>>>>> cc343e15 (Upgrade to v8 commit)
   className = '',
 }: {
   children: ReactNode;
@@ -101,16 +78,6 @@ export function Button({
   type?: 'button' | 'submit';
   variant?: 'primary' | 'secondary' | 'danger' | 'ghost';
   disabled?: boolean;
-<<<<<<< HEAD
-  className?: string;
-}) {
-  const variants: Record<string, string> = {
-    primary: 'bg-brand-navy text-white hover:bg-brand-navyLight',
-    secondary: 'bg-white text-slate-700 ring-1 ring-slate-300 hover:bg-slate-50',
-    danger: 'bg-red-600 text-white hover:bg-red-700',
-    ghost: 'text-slate-600 hover:bg-slate-100',
-  };
-=======
   loading?: boolean;
   className?: string;
 }) {
@@ -126,63 +93,20 @@ export function Button({
   // resolved" bug class a loading state exists to prevent in the first
   // place, so making it visible without also blocking clicks would
   // defeat the point.
->>>>>>> cc343e15 (Upgrade to v8 commit)
   return (
     <button
       type={type}
       onClick={onClick}
-<<<<<<< HEAD
-      disabled={disabled}
-      className={`inline-flex items-center justify-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-50 ${variants[variant]} ${className}`}
-    >
-=======
       disabled={disabled || loading}
       aria-busy={loading}
       className={`inline-flex items-center justify-center gap-1.5 rounded-xl px-4 py-2.5 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-50 ${variants[variant]} ${className}`}
     >
       {loading && <Loader2 size={14} className="animate-spin" />}
->>>>>>> cc343e15 (Upgrade to v8 commit)
       {children}
     </button>
   );
 }
 
-<<<<<<< HEAD
-export function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
-  return (
-    <input
-      {...props}
-      className={`w-full rounded-lg border border-slate-300 px-3 py-2 text-sm placeholder:text-slate-400 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy ${props.className || ''}`}
-    />
-  );
-}
-
-export function Select({ children, ...props }: React.SelectHTMLAttributes<HTMLSelectElement>) {
-  return (
-    <select
-      {...props}
-      className={`rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy ${props.className || ''}`}
-    >
-      {children}
-    </select>
-  );
-}
-
-export function EmptyState({ message }: { message: string }) {
-  return <div className="px-5 py-10 text-center text-sm text-slate-400">{message}</div>;
-}
-
-export function ErrorBanner({ message }: { message: string }) {
-  return <div className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700 ring-1 ring-red-200">{message}</div>;
-}
-
-export function StatTile({ label, value, hint }: { label: string; value: string; hint?: string }) {
-  return (
-    <Card className="p-5">
-      <p className="text-xs font-medium uppercase tracking-wide text-slate-400">{label}</p>
-      <p className="tabular mt-2 text-2xl font-semibold text-slate-900">{value}</p>
-      {hint && <p className="mt-1 text-xs text-slate-400">{hint}</p>}
-=======
 export function Input({
   error,
   className = '',
@@ -277,7 +201,6 @@ export function StatTile({
       <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">{label}</p>
       <p className="tabular mt-2 text-[26px] font-semibold tracking-tight text-slate-900 dark:text-slate-50">{value}</p>
       {hint && <p className={`mt-1 text-xs ${hintClasses[tone]}`}>{hint}</p>}
->>>>>>> cc343e15 (Upgrade to v8 commit)
     </Card>
   );
 }

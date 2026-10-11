@@ -75,18 +75,6 @@ export default function LoginPage() {
   }
 
   return (
-<<<<<<< HEAD
-    <div className="flex min-h-screen items-center justify-center bg-brand-navy px-4">
-      <div className="w-full max-w-sm">
-        <div className="mb-8 flex flex-col items-center">
-          <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-brand-gold text-lg font-bold text-brand-navy">
-            Z
-          </div>
-          <h1 className="text-xl font-semibold text-white">ZannyPay Admin Console</h1>
-        </div>
-
-        <div className="rounded-2xl bg-white p-7 shadow-xl">
-=======
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-b from-brand-navy to-brand-navyDeep px-4">
       {/* Ambient radial glow — previously this was a flat solid navy
           background with zero depth or motion, indistinguishable from a
@@ -110,7 +98,6 @@ export default function LoginPage() {
         </div>
 
         <div className="rounded-2xl bg-white p-7 shadow-2xl ring-1 ring-black/5 dark:bg-slate-900 dark:ring-white/10">
->>>>>>> cc343e15 (Upgrade to v8 commit)
           {!mfaToken ? (
             <form onSubmit={handlePasswordSubmit} className="space-y-4">
               <div>

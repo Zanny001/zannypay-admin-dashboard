@@ -24,11 +24,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
         <Sidebar role={admin.role} />
         <div className="flex flex-1 flex-col">
           <Topbar admin={admin} />
-<<<<<<< HEAD
-          <main className="flex-1 overflow-y-auto bg-slate-50 p-6">{children}</main>
-=======
           <main className="flex-1 overflow-y-auto bg-slate-50 p-6 dark:bg-slate-950">{children}</main>
->>>>>>> cc343e15 (Upgrade to v8 commit)
         </div>
       </div>
     </AdminProvider>

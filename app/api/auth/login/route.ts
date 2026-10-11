@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { backendFetch, BackendError } from '@/lib/api';
 import { attachSessionCookie } from '@/lib/session';
-<<<<<<< HEAD
-
-export async function POST(req: NextRequest) {
-=======
 import { checkRateLimit, rateLimitResponse } from '@/lib/rate-limit';
 
 export async function POST(req: NextRequest) {
@@ -13,7 +9,6 @@ export async function POST(req: NextRequest) {
   const rl = checkRateLimit(req, 'admin-login', 5, 5 * 60 * 1000);
   if (rl.limited) return rateLimitResponse(rl.retryAfterSeconds);
 
->>>>>>> cc343e15 (Upgrade to v8 commit)
   const { email, password } = await req.json();
 
   try {

@@ -1,11 +1,5 @@
 'use client';
 
-<<<<<<< HEAD
-import { useEffect, useState, FormEvent } from 'react';
-import { apiFetch, ClientApiError } from '@/lib/client-api';
-import { Card, Button, Select, Input, Badge, StatusBadge, ErrorBanner, EmptyState } from '@/components/ui';
-import { useAdmin } from '@/components/admin-context';
-=======
 import { useEffect, useState, FormEvent, useCallback, useMemo } from 'react';
 import { Download, Search, X, ArrowUpDown } from 'lucide-react';
 import { apiFetch, ClientApiError } from '@/lib/client-api';
@@ -13,7 +7,6 @@ import { Card, Button, Select, Input, Badge, StatusBadge, ErrorBanner, EmptyStat
 import { useAdmin } from '@/components/admin-context';
 import { StepUpModal } from '@/components/step-up-modal';
 import { TransactionDrawer } from '@/components/transaction-drawer';
->>>>>>> cc343e15 (Upgrade to v8 commit)
 
 interface TxnRow {
   id: string;
@@ -25,11 +18,6 @@ interface TxnRow {
   flagged: boolean;
   reference: string;
   createdAt: string;
-<<<<<<< HEAD
-  user: { name: string; accountNumber: string; phone: string };
-}
-
-=======
   reversedTransactionId?: string | null;
   user: { name: string; accountNumber: string; phone: string };
 }
@@ -44,7 +32,6 @@ interface TxnRow {
 // simply wasn't using them.
 const PAGE_SIZE = 20;
 
->>>>>>> cc343e15 (Upgrade to v8 commit)
 export default function TransactionsPage() {
   const admin = useAdmin();
   const canManage = admin.role === 'SUPER_ADMIN' || admin.role === 'FINANCE_OFFICER';
@@ -53,16 +40,6 @@ export default function TransactionsPage() {
   const [status, setStatus] = useState('');
   const [flagged, setFlagged] = useState('');
   const [type, setType] = useState('');
-<<<<<<< HEAD
-  const [txns, setTxns] = useState<TxnRow[]>([]);
-  const [total, setTotal] = useState(0);
-  const [error, setError] = useState<string | null>(null);
-  const [busyId, setBusyId] = useState<string | null>(null);
-  const [reversingId, setReversingId] = useState<string | null>(null);
-  const [reverseReason, setReverseReason] = useState('');
-
-  function load() {
-=======
   const [search, setSearch] = useState('');
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
@@ -81,22 +58,10 @@ export default function TransactionsPage() {
   const [drawerTxnId, setDrawerTxnId] = useState<string | null>(null);
 
   const buildParams = useCallback(() => {
->>>>>>> cc343e15 (Upgrade to v8 commit)
     const params = new URLSearchParams();
     if (status) params.set('status', status);
     if (flagged) params.set('flagged', flagged);
     if (type) params.set('type', type);
-<<<<<<< HEAD
-    apiFetch(`/admin/transactions?${params.toString()}`)
-      .then((data) => {
-        setTxns(data.transactions);
-        setTotal(data.total);
-      })
-      .catch((err: ClientApiError) => setError(err.message));
-  }
-
-  useEffect(load, []); // eslint-disable-line react-hooks/exhaustive-deps
-=======
     return params;
   }, [status, flagged, type]);
 
@@ -138,22 +103,18 @@ export default function TransactionsPage() {
   }, [buildParams, search, dateFrom, dateTo, sortDesc]);
 
   useEffect(load, [status, flagged, type]); // eslint-disable-line react-hooks/exhaustive-deps
->>>>>>> cc343e15 (Upgrade to v8 commit)
 
   function handleFilter(e: FormEvent) {
     e.preventDefault();
     load();
   }
 
-<<<<<<< HEAD
-=======
   const pagedTxns = useMemo(() => {
     const start = (page - 1) * PAGE_SIZE;
     return txns.slice(start, start + PAGE_SIZE);
   }, [txns, page]);
   const pageCount = Math.max(1, Math.ceil(txns.length / PAGE_SIZE));
 
->>>>>>> cc343e15 (Upgrade to v8 commit)
   async function toggleFlag(txn: TxnRow) {
     setBusyId(txn.id);
     setError(null);
@@ -167,22 +128,6 @@ export default function TransactionsPage() {
     }
   }
 
-<<<<<<< HEAD
-  async function submitReversal(txnId: string) {
-    if (reverseReason.trim().length < 5) {
-      setError('A reversal reason of at least 5 characters is required.');
-      return;
-    }
-    setBusyId(txnId);
-    setError(null);
-    try {
-      await apiFetch(`/admin/transactions/${txnId}/reverse`, { method: 'POST', body: JSON.stringify({ reason: reverseReason }) });
-      setReversingId(null);
-      setReverseReason('');
-      load();
-    } catch (err: any) {
-      setError(err.message);
-=======
   async function bulkFlag(nextFlagged: boolean) {
     setError(null);
     const ids = Array.from(selectedIds);
@@ -212,41 +157,11 @@ export default function TransactionsPage() {
       setReverseReason('');
       setPendingReversal(null);
       load();
->>>>>>> cc343e15 (Upgrade to v8 commit)
     } finally {
       setBusyId(null);
     }
   }
 
-<<<<<<< HEAD
-  return (
-    <div className="space-y-4">
-      <form onSubmit={handleFilter} className="flex flex-wrap gap-2">
-        <Select value={status} onChange={(e) => setStatus(e.target.value)}>
-          <option value="">Any status</option>
-          <option value="completed">Completed</option>
-          <option value="pending">Pending</option>
-          <option value="failed">Failed</option>
-          <option value="reversed">Reversed</option>
-        </Select>
-        <Select value={flagged} onChange={(e) => setFlagged(e.target.value)}>
-          <option value="">Flagged: any</option>
-          <option value="true">Flagged only</option>
-          <option value="false">Not flagged</option>
-        </Select>
-        <Select value={type} onChange={(e) => setType(e.target.value)}>
-          <option value="">Any type</option>
-          <option value="debit">Debit</option>
-          <option value="credit">Credit</option>
-        </Select>
-        <Button type="submit">Filter</Button>
-      </form>
-
-      {error && <ErrorBanner message={error} />}
-
-      <Card>
-        {txns.length === 0 ? (
-=======
   function toggleSelect(id: string) {
     setSelectedIds((prev) => {
       const next = new Set(prev);
@@ -328,17 +243,12 @@ export default function TransactionsPage() {
             ))}
           </div>
         ) : pagedTxns.length === 0 ? (
->>>>>>> cc343e15 (Upgrade to v8 commit)
           <EmptyState message="No transactions match these filters." />
         ) : (
           <table className="w-full text-sm">
             <thead>
-<<<<<<< HEAD
-              <tr className="border-b border-slate-100 text-left text-xs uppercase tracking-wide text-slate-400">
-=======
               <tr className="border-b border-slate-100 text-left text-xs uppercase tracking-wide text-slate-400 dark:border-slate-800 dark:text-slate-500">
                 {canFlag && <th className="w-10 px-5 py-3" />}
->>>>>>> cc343e15 (Upgrade to v8 commit)
                 <th className="px-5 py-3 font-medium">User</th>
                 <th className="px-5 py-3 font-medium">Description</th>
                 <th className="px-5 py-3 font-medium">Amount</th>
@@ -347,23 +257,6 @@ export default function TransactionsPage() {
               </tr>
             </thead>
             <tbody>
-<<<<<<< HEAD
-              {txns.map((t) => (
-                <tr key={t.id} className="border-b border-slate-50 last:border-0 align-top hover:bg-slate-50">
-                  <td className="px-5 py-3">
-                    <p className="font-medium text-slate-800">{t.user?.name || '—'}</p>
-                    <p className="tabular text-xs text-slate-400">{t.user?.accountNumber}</p>
-                  </td>
-                  <td className="px-5 py-3">
-                    <p>{t.title} {t.flagged && <Badge tone="red">Flagged</Badge>}</p>
-                    <p className="tabular text-xs text-slate-400">{t.reference} · {new Date(t.createdAt).toLocaleString()}</p>
-                  </td>
-                  <td className={`tabular px-5 py-3 font-medium ${t.type === 'credit' ? 'text-emerald-600' : 'text-slate-800'}`}>
-                    {t.type === 'credit' ? '+' : '-'}₦{Number(t.amount).toLocaleString()}
-                  </td>
-                  <td className="px-5 py-3"><StatusBadge status={t.status} /></td>
-                  <td className="px-5 py-3">
-=======
               {pagedTxns.map((t) => (
                 <tr
                   key={t.id}
@@ -388,7 +281,6 @@ export default function TransactionsPage() {
                   </td>
                   <td className="px-5 py-3"><StatusBadge status={t.status} /></td>
                   <td className="px-5 py-3" onClick={(e) => e.stopPropagation()}>
->>>>>>> cc343e15 (Upgrade to v8 commit)
                     <div className="flex flex-col gap-2">
                       {canFlag && (
                         <Button variant="secondary" disabled={busyId === t.id} onClick={() => toggleFlag(t)} className="text-xs">
@@ -400,9 +292,6 @@ export default function TransactionsPage() {
                           <div className="w-48 space-y-1.5">
                             <Input placeholder="Reversal reason" value={reverseReason} onChange={(e) => setReverseReason(e.target.value)} />
                             <div className="flex gap-1.5">
-<<<<<<< HEAD
-                              <Button className="flex-1 text-xs" disabled={busyId === t.id} onClick={() => submitReversal(t.id)}>Confirm</Button>
-=======
                               <Button
                                 className="flex-1 text-xs"
                                 disabled={busyId === t.id}
@@ -416,7 +305,6 @@ export default function TransactionsPage() {
                               >
                                 Confirm
                               </Button>
->>>>>>> cc343e15 (Upgrade to v8 commit)
                               <Button variant="ghost" className="text-xs" onClick={() => setReversingId(null)}>Cancel</Button>
                             </div>
                           </div>
@@ -434,9 +322,6 @@ export default function TransactionsPage() {
           </table>
         )}
       </Card>
-<<<<<<< HEAD
-      <p className="text-xs text-slate-400">{total} matching transactions.</p>
-=======
 
       <div className="flex items-center justify-between text-xs text-slate-400 dark:text-slate-500">
         <p>{total} matching transaction{total === 1 ? '' : 's'}{search || dateFrom || dateTo ? ' (filtered)' : ''}.</p>
@@ -461,7 +346,6 @@ export default function TransactionsPage() {
       )}
 
       {drawerTxnId && <TransactionDrawer txnId={drawerTxnId} onClose={() => setDrawerTxnId(null)} />}
->>>>>>> cc343e15 (Upgrade to v8 commit)
     </div>
   );
 }

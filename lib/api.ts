@@ -21,23 +21,7 @@ export class BackendError extends Error {
 // components, server actions) — never import this into a 'use client'
 // file, since it reads the httpOnly cookie directly via next/headers.
 export async function backendFetch(path: string, init?: RequestInit & { asAdmin?: boolean }) {
-<<<<<<< HEAD
-  const token = getSessionToken();
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-    ...(init?.headers as Record<string, string> | undefined),
-  };
-  if (token) headers.Authorization = `Bearer ${token}`;
-
-  const res = await fetch(`${BACKEND_BASE_URL}${API_PREFIX}${path}`, {
-    ...init,
-    headers,
-    cache: 'no-store', // admin data is never safe to cache — always the current state
-  });
-
-=======
   const res = await rawBackendFetch(path, init);
->>>>>>> cc343e15 (Upgrade to v8 commit)
   const contentType = res.headers.get('content-type') || '';
   const body = contentType.includes('application/json') ? await res.json().catch(() => null) : await res.text();
 
@@ -46,8 +30,6 @@ export async function backendFetch(path: string, init?: RequestInit & { asAdmin?
   }
   return body;
 }
-<<<<<<< HEAD
-=======
 
 // Used by the proxy route for endpoints whose response isn't JSON — the
 // CSV exports (AdminController's /transactions/export, /audit-logs/export)
@@ -70,4 +52,3 @@ export async function rawBackendFetch(path: string, init?: RequestInit) {
     cache: 'no-store', // admin data is never safe to cache — always the current state
   });
 }
->>>>>>> cc343e15 (Upgrade to v8 commit)

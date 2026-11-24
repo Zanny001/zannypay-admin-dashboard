@@ -93,7 +93,7 @@ export function isSameOriginRequest(req: NextRequest): boolean {
     return false;
   }
   try {
-    return new URL(source).host === req.nextUrl.host;
+    return new URL(source).origin === req.nextUrl.origin;
   } catch {
     return false;
   }

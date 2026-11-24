@@ -1,3 +1,5 @@
+/** @jest-environment node */
+
 import { NextRequest } from 'next/server';
 import { checkRateLimit, isSameOriginRequest } from './rate-limit';
 

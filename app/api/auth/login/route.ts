@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { backendFetch, BackendError } from '@/lib/api';
 import { attachSessionCookie } from '@/lib/session';
-import { checkRateLimit, rateLimitResponse } from '@/lib/rate-limit';
+import { checkRateLimit, rateLimitResponse, isSameOriginRequest, forbiddenOriginResponse } from '@/lib/rate-limit';
 
 export async function POST(req: NextRequest) {
+  // Reject cross-site POSTs before processing credentials or session cookies.
+  if (!isSameOriginRequest(req)) return forbiddenOriginResponse();
   // 5 attempts per 5 minutes per IP — tight enough to make credential
   // stuffing pointless, loose enough to never catch a human mistyping.
   const rl = checkRateLimit(req, 'admin-login', 5, 5 * 60 * 1000);

@@ -75,7 +75,8 @@ item or button here is a UX nicety, not the actual security boundary.
 - No client-side state library (Redux/Zustand/React Query) — each page
   fetches its own data with a plain `useEffect`. Fine at this scale; worth
   reaching for React Query if this grows a lot more shared/cached state.
-- No automated tests. Given the sensitivity of what this touches, add at
-  minimum integration tests around the auth flow and the fraud
-  confirm/dismiss actions before relying on this in production.
+- Automated unit/component tests cover selected pages and shared UI.
+  Coverage is not yet sufficient for production: add end-to-end tests for
+  login, 2FA, session revocation, role boundaries, privileged actions,
+  fraud decisions, reversals, and exports before relying on this in production.
 - No dark mode, no i18n — internal tool, single locale assumed.

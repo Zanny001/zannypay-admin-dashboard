@@ -21,6 +21,7 @@ describe('admin BFF request security', () => {
   it.each([
     ['cross-origin host', { origin: 'https://attacker.example' }],
     ['cross-origin port', { origin: 'https://admin.example.com:444' }],
+    ['cross-origin scheme', { origin: 'http://admin.example.com' }],
     ['malformed origin', { origin: 'not a url' }],
     ['missing origin and referer', {}],
   ])('rejects %s', (_label, headers) => {

@@ -12,7 +12,7 @@ This is a source-level review of the supplied mobile v19 Ultra, admin v10 Ultra,
 - Backend KYC and sanctions: the supplied modules wire mock providers; the mock KYC provider returns a passing liveness result. Production onboarding requires real contracted providers and documented manual-review handling.
 - Backend card issuing: the supplied module wires a mock card issuer. No production card-issuing adapter is established by this package.
 - Backend storage and OTP: the supplied environment example includes local storage and mock/rollout settings. Production startup must reject mock providers, ephemeral local storage, missing secure secrets, and disabled mandatory OTP policy.
-- Admin: the BFF keeps the bearer token server-side in an httpOnly cookie; backend authorization remains the security boundary. E2E coverage is still required for login, 2FA, session revocation, role boundaries, privileged actions, reversals, exports, CSRF, and proxy allowlisting.
+- Admin: the BFF keeps the bearer token server-side in an httpOnly cookie; backend authorization remains the security boundary. The initial review found that the generic proxy enforced same-origin checks on mutations, but login, 2FA verification and logout routes did not. Those three POST routes now reject missing or cross-origin Origin/Referer headers before processing credentials or session cookies. E2E coverage is still required for login, 2FA, session revocation, role boundaries, privileged actions, reversals, exports, CSRF and proxy allowlisting.
 
 ## Required production-readiness work
 ### Backend
@@ -32,7 +32,7 @@ This is a source-level review of the supplied mobile v19 Ultra, admin v10 Ultra,
 
 ### Admin
 1. Add E2E tests for authentication, TOTP/recovery, session revocation, role checks, step-up authentication, KYC decisions, fraud actions, reversals and exports.
-2. Test CSRF, cookie attributes, proxy destination allowlisting, request timeouts and security headers.
+2. Keep same-origin checks on every state-changing BFF route (including auth routes); test CSRF, cookie attributes, proxy destination allowlisting, request timeouts and security headers.
 3. Add operational views for failed actions, stale data, API latency and audit-log delivery.
 
 ## Standards baseline for external verification

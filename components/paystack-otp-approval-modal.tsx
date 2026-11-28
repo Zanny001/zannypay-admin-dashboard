@@ -60,7 +60,7 @@ export function PaystackOtpApprovalModal({
   }
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/60 p-4 backdrop-blur-sm" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && !submitting && onClose()}>
+    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/60 p-4 backdrop-blur-sm" role="presentation">
       <section
         role="dialog"
         aria-modal="true"

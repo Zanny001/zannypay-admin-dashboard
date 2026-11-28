@@ -97,8 +97,6 @@ export function PaystackOtpApprovalModal({
               type="password"
               inputMode="numeric"
               autoComplete="one-time-code"
-              pattern="[0-9]{4,8}"
-              minLength={4}
               maxLength={8}
               value={otp}
               onChange={(event) => setOtp(event.target.value.replace(/[^0-9]/g, '').slice(0, 8))}

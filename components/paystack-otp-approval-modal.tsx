@@ -29,7 +29,7 @@ export function PaystackOtpApprovalModal({
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!/^\\d{4,8}$/.test(otp)) {
+    if (!/^\d{4,8}$/.test(otp)) {
       setError('Enter the 4–8 digit Paystack business approval code.');
       return;
     }
@@ -112,7 +112,7 @@ export function PaystackOtpApprovalModal({
             <label htmlFor="paystack-step-up" className="mb-1.5 block text-xs font-medium text-slate-700 dark:text-slate-300">{admin.twoFactorEnabled ? 'Fresh authenticator code / recovery code' : 'Current admin password'}</label>
             <input
               id="paystack-step-up"
-              type={admin.twoFactorEnabled ? 'password' : 'password'}
+              type="password"
               inputMode={admin.twoFactorEnabled ? 'numeric' : undefined}
               autoComplete="off"
               value={stepUp}

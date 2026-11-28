@@ -59,6 +59,23 @@ describe('PaystackOtpApprovalModal', () => {
     expect(onComplete).toHaveBeenCalledWith({ success: true, status: 'completed' });
   });
 
+  it('clears both codes after a failed or uncertain approval request', async () => {
+    mockApiFetch.mockRejectedValue(new Error('Network response was lost'));
+    renderModal(true);
+
+    const otpInput = screen.getByLabelText('Paystack business approval code') as HTMLInputElement;
+    const stepUpInput = screen.getByLabelText('Fresh authenticator code / recovery code') as HTMLInputElement;
+    fireEvent.change(otpInput, { target: { value: '123456' } });
+    fireEvent.change(stepUpInput, { target: { value: '654321' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Submit approval' }));
+
+    await waitFor(() => {
+      expect(otpInput.value).toBe('');
+      expect(stepUpInput.value).toBe('');
+    });
+    expect(await screen.findByText('Approval could not be confirmed. Check the transfer status before trying again.')).toBeInTheDocument();
+  });
+
   it('blocks approval when the admin has not enabled mandatory 2FA', async () => {
     renderModal(false);
 

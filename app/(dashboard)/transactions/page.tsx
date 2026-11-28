@@ -7,6 +7,7 @@ import { Card, Button, Select, Input, Badge, StatusBadge, ErrorBanner, EmptyStat
 import { useAdmin } from '@/components/admin-context';
 import { StepUpModal } from '@/components/step-up-modal';
 import { TransactionDrawer } from '@/components/transaction-drawer';
+import { PaystackOtpApprovalModal } from '@/components/paystack-otp-approval-modal';
 
 interface TxnRow {
   id: string;
@@ -15,6 +16,7 @@ interface TxnRow {
   title: string;
   amount: string | number;
   status: string;
+  providerStatus?: string | null;
   flagged: boolean;
   reference: string;
   createdAt: string;
@@ -56,6 +58,8 @@ export default function TransactionsPage() {
   const [pendingReversal, setPendingReversal] = useState<string | null>(null); // txnId awaiting step-up confirmation
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [drawerTxnId, setDrawerTxnId] = useState<string | null>(null);
+  const [paystackApprovalReference, setPaystackApprovalReference] = useState<string | null>(null);
+  const [approvalNotice, setApprovalNotice] = useState<string | null>(null);
 
   const buildParams = useCallback(() => {
     const params = new URLSearchParams();
@@ -223,6 +227,12 @@ export default function TransactionsPage() {
       </div>
 
       {error && <ErrorBanner message={error} />}
+      {approvalNotice && (
+        <div role="status" className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-300">
+          {approvalNotice}
+          <button type="button" onClick={() => setApprovalNotice(null)} className="ml-3 font-medium underline">Dismiss</button>
+        </div>
+      )}
 
       {selectedIds.size > 0 && canFlag && (
         <div className="flex items-center gap-3 rounded-lg bg-brand-navy/5 px-4 py-2.5 text-sm dark:bg-brand-gold/5">
@@ -287,7 +297,16 @@ export default function TransactionsPage() {
                           {t.flagged ? 'Unflag' : 'Flag'}
                         </Button>
                       )}
-                      {canManage && t.status !== 'reversed' && (
+                      {canManage && t.category === 'external_bank_transfer' && t.status === 'pending' && t.providerStatus === 'otp' && (
+                        <Button
+                          variant="secondary"
+                          className="text-xs"
+                          onClick={() => setPaystackApprovalReference(t.reference)}
+                        >
+                          Approve Paystack OTP
+                        </Button>
+                      )}
+                      {canManage && t.status !== 'reversed' && t.category !== 'external_bank_transfer' && (
                         reversingId === t.id ? (
                           <div className="w-48 space-y-1.5">
                             <Input placeholder="Reversal reason" value={reverseReason} onChange={(e) => setReverseReason(e.target.value)} />
@@ -346,6 +365,17 @@ export default function TransactionsPage() {
       )}
 
       {drawerTxnId && <TransactionDrawer txnId={drawerTxnId} onClose={() => setDrawerTxnId(null)} />}
+      {paystackApprovalReference && (
+        <PaystackOtpApprovalModal
+          reference={paystackApprovalReference}
+          onClose={() => setPaystackApprovalReference(null)}
+          onComplete={(result) => {
+            setPaystackApprovalReference(null);
+            setApprovalNotice(result.message || (result.success ? 'Paystack confirmed the approval.' : 'Paystack has not confirmed the final status. Check the transaction before taking further action.'));
+            load();
+          }}
+        />
+      )}
     </div>
   );
 }

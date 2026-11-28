@@ -59,24 +59,19 @@ describe('PaystackOtpApprovalModal', () => {
     expect(onComplete).toHaveBeenCalledWith({ success: true, status: 'completed' });
   });
 
-  it('uses the current admin password as step-up when 2FA is not enabled', async () => {
-    mockApiFetch.mockResolvedValue({ success: true, status: 'pending' } as any);
+  it('blocks approval when the admin has not enabled mandatory 2FA', async () => {
     renderModal(false);
 
     fireEvent.change(screen.getByLabelText('Paystack business approval code'), {
       target: { value: '123456' },
     });
-    fireEvent.change(screen.getByLabelText('Current admin password'), {
-      target: { value: 'not-a-real-password' },
+    fireEvent.change(screen.getByLabelText('Fresh authenticator code / recovery code'), {
+      target: { value: '654321' },
     });
     fireEvent.click(screen.getByRole('button', { name: 'Submit approval' }));
 
-    await waitFor(() => expect(mockApiFetch).toHaveBeenCalledTimes(1));
-    const [, request] = mockApiFetch.mock.calls[0];
-    expect(JSON.parse(String(request?.body))).toEqual({
-      otp: '123456',
-      stepUpPassword: 'not-a-real-password',
-    });
+    expect(await screen.findByText('Enable admin two-factor authentication before approving Paystack payouts.')).toBeInTheDocument();
+    expect(mockApiFetch).not.toHaveBeenCalled();
   });
 
   it('rejects malformed business OTP locally without making a network request', async () => {

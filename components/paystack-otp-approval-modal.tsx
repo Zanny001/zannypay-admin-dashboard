@@ -33,8 +33,12 @@ export function PaystackOtpApprovalModal({
       setError('Enter the 4–8 digit Paystack business approval code.');
       return;
     }
+    if (!admin.twoFactorEnabled) {
+      setError('Enable admin two-factor authentication before approving Paystack payouts.');
+      return;
+    }
     if (!stepUp.trim()) {
-      setError(admin.twoFactorEnabled ? 'Enter your fresh authenticator code.' : 'Enter your current admin password.');
+      setError('Enter your fresh authenticator code or recovery code.');
       return;
     }
 
@@ -45,7 +49,7 @@ export function PaystackOtpApprovalModal({
         method: 'POST',
         body: JSON.stringify({
           otp,
-          ...(admin.twoFactorEnabled ? { stepUpCode: stepUp.trim() } : { stepUpPassword: stepUp }),
+          stepUpCode: stepUp.trim(),
         }),
       }) as ApprovalResult;
       setOtp('');
@@ -107,17 +111,17 @@ export function PaystackOtpApprovalModal({
           </div>
 
           <div>
-            <label htmlFor="paystack-step-up" className="mb-1.5 block text-xs font-medium text-slate-700 dark:text-slate-300">{admin.twoFactorEnabled ? 'Fresh authenticator code / recovery code' : 'Current admin password'}</label>
+            <label htmlFor="paystack-step-up" className="mb-1.5 block text-xs font-medium text-slate-700 dark:text-slate-300">Fresh authenticator code / recovery code</label>
             <input
               id="paystack-step-up"
               type="password"
-              inputMode={admin.twoFactorEnabled ? 'numeric' : undefined}
+              inputMode="numeric"
               autoComplete="off"
               value={stepUp}
               onChange={(event) => setStepUp(event.target.value)}
               required
               className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/15 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
-              placeholder={admin.twoFactorEnabled ? 'Authenticator code' : 'Admin password'}
+              placeholder="Authenticator or recovery code"
             />
           </div>
 

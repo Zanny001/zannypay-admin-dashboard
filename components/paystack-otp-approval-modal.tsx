@@ -56,6 +56,10 @@ export function PaystackOtpApprovalModal({
       setStepUp('');
       onComplete(result);
     } catch (err) {
+      // Do not retain merchant OTP or admin step-up credentials after any
+      // failed or uncertain request. The operator must enter fresh codes.
+      setOtp('');
+      setStepUp('');
       const message = err instanceof ClientApiError ? err.message : 'Approval could not be confirmed. Check the transfer status before trying again.';
       setError(message);
     } finally {
